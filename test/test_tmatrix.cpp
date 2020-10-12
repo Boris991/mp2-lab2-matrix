@@ -4,7 +4,7 @@
 
 TEST(TMatrix, can_create_matrix_with_positive_length)
 {
-  ASSERT_NO_THROW(TMatrix<int> m(5));
+  ASSERT_NO_THROW(TMatrix<int> m(2));
 }
 
 TEST(TMatrix, cant_create_too_large_matrix)
@@ -44,6 +44,8 @@ TEST(TMatrix, can_get_size)
     TMatrix<int> m1(m);
     EXPECT_NE(&m, &m1);
 }
+
+
 
 TEST(TMatrix, can_set_and_get_element)
 {
@@ -85,7 +87,7 @@ TEST(TMatrix, assign_operator_change_matrix_size)
 {
     TMatrix<int> m(10), m2(9);
     m = m2;
-    EXPECT_EQ(9, m.GetSize());
+    EXPECT_EQ(m[0].GetSize(), m2[0].GetSize());
 }
 
 TEST(TMatrix, can_assign_matrices_of_different_size)
@@ -152,4 +154,24 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
     TMatrix<int> m(5), m2(6);
     ASSERT_ANY_THROW(m - m2);
 }
-
+TEST(TMatrix, can_multiply_matrixes_with_equal_size)
+{
+    TMatrix<int> m(10),m2(10),m3(10);
+    for (int i = 0; i < 10; i++)
+    {
+        m[i][i] = 1;
+        m2[i][i] = 1;
+        m3[i][i] = 1;
+    }
+    EXPECT_EQ(m3, m2 * m);
+}
+TEST(TMatrix, cant_multiply_matrixes_with_equal_size)
+{
+    TMatrix<int> m(8), m2(9);
+    for (int i = 0; i < 8; i++)
+    {
+        m[i][i] = 1;
+        m2[i][i] = 1;
+    }
+    ASSERT_ANY_THROW(m2 * m);
+}
